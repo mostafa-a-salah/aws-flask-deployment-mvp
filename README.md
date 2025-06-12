@@ -1,3 +1,6 @@
+## The Story Behind This Project
+
+This project was built to solve an urgent, real-world business need. When a third-party software vendor failed to deliver a critical MVP for my company, I volunteered to build and deploy a solution from scratch. In under 48 hours, I taught myself the necessary tools, developed a functional application, and single-handedly deployed it to a production-ready cloud environment on AWS. This portfolio piece is the direct result of that initiative.
 # aws-flask-deployment-mvp
 Deployment of a Python Flask application to an AWS EC2 instance using Gunicorn and NGINX
 **Live Application URL:** [http://54.144.146.24](http://54.144.146.24)
