@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Executive Programmes - ESBE{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="bg-primary text-white py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold mb-3">Executive Programmes</h1>
+                <p class="lead mb-0">
+                    Discover UK-accredited programmes designed specifically for MENA leaders. 
+                    Filter by category or industry to find your perfect match.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('journey_builder') }}" class="btn btn-warning btn-lg">
+                    <i class="fas fa-route me-2"></i>Find Your Journey
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filters Section -->
+<section class="py-4 bg-light border-bottom">
+    <div class="container">
+        <form method="GET" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Learning Pathway</label>
+                <select name="category" class="form-select" onchange="this.form.submit()">
+                    <option value="all" {% if selected_category == 'all' %}selected{% endif %}>All Pathways</option>
+                    <option value="senior_executive" {% if selected_category == 'senior_executive' %}selected{% endif %}>Senior Executive Education</option>
+                    <option value="micro_credentials" {% if selected_category == 'micro_credentials' %}selected{% endif %}>Micro-Credentials</option>
+                    <option value="corporate" {% if selected_category == 'corporate' %}selected{% endif %}>Corporate Development</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Industry Focus</label>
+                <select name="industry" class="form-select" onchange="this.form.submit()">
+                    <option value="all" {% if selected_industry == 'all' %}selected{% endif %}>All Industries</option>
+                    <option value="financial" {% if selected_industry == 'financial' %}selected{% endif %}>Financial Services</option>
+                    <option value="healthcare" {% if selected_industry == 'healthcare' %}selected{% endif %}>Healthcare & Medical</option>
+                    <option value="energy" {% if selected_industry == 'energy' %}selected{% endif %}>Energy & Sustainability</option>
+                    <option value="general" {% if selected_industry == 'general' %}selected{% endif %}>Cross-Sector Leadership</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('programmes') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-redo me-1"></i>Clear Filters
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-filter me-1"></i>Apply Filters
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h3>{{ programmes|length }} Programme{{ 's' if programmes|length != 1 else '' }} Found</h3>
+                {% if selected_category != 'all' or selected_industry != 'all' %}
+                    <p class="text-muted">
+                        Filtered by: 
+                        {% if selected_category != 'all' %}
+                            <span class="badge bg-primary">{{ categories[selected_category]['name'] if selected_category in categories else selected_category|title }}</span>
+                        {% endif %}
+                        {% if selected_industry != 'all' %}
+                            <span class="badge bg-success">{{ industries[selected_industry] if selected_industry in industries else selected_industry|title }}</span>
+                        {% endif %}
+                    </p>
+                {% endif %}
+            </div>
+            <div class="col-md-4 text-md-end">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="view" id="grid-view" checked>
+                    <label class="btn btn-outline-secondary" for="grid-view">
+                        <i class="fas fa-th"></i>
+                    </label>
+                    <input type="radio" class="btn-check" name="view" id="list-view">
+                    <label class="btn btn-outline-secondary" for="list-view">
+                        <i class="fas fa-list"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        {% if programmes %}
+            <div class="row g-4" id="programmes-grid">
+                {% for programme in programmes %}
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="card h-100 border-0 shadow-sm programme-card">
+                            <div class="card-header bg-transparent border-0 pb-0">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div class="badge-group">
+                                        {% if programme.category == 'senior_executive' %}
+                                            <span class="badge bg-primary">Senior Executive</span>
+                                        {% elif programme.category == 'micro_credentials' %}
+                                            <span class="badge bg-success">Micro-Credential</span>
+                                            {% if programme.get('duration') %}
+                                                <span class="badge bg-info">{{ programme.duration }}</span>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="badge bg-warning text-dark">Corporate</span>
+                                        {% endif %}
+                                    </div>
+                                    {% if programme.industry == 'financial' %}
+                                        <i class="fas fa-chart-line text-primary"></i>
+                                    {% elif programme.industry == 'healthcare' %}
+                                        <i class="fas fa-heartbeat text-danger"></i>
+                                    {% elif programme.industry == 'energy' %}
+                                        <i class="fas fa-leaf text-success"></i>
+                                    {% else %}
+                                        <i class="fas fa-users text-secondary"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+                                <h5 class="card-title">{{ programme.title }}</h5>
+                                <p class="card-text text-muted small mb-3">{{ programme.short_description }}</p>
+                                
+                                {% if programme.delivery %}
+                                    <div class="mb-2">
+                                        <small class="text-muted">
+                                            <i class="fas fa-desktop me-1"></i>{{ programme.delivery }}
+                                        </small>
+                                    </div>
+                                {% endif %}
+                                
+                                {% if programme.target_audience %}
+                                    <div class="mb-3">
+                                        <small class="text-muted">
+                                            <strong>For:</strong> {{ programme.target_audience[:100] }}{% if programme.target_audience|length > 100 %}...{% endif %}
+                                        </small>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="card-footer bg-transparent border-0">
+                                <div class="d-flex gap-2">
+                                    <a href="{{ url_for('programme_detail', programme_id=programme.id) }}" class="btn btn-primary flex-fill">
+                                        View Details
+                                    </a>
+                                    <a href="{{ url_for('contact') }}?programme={{ programme.title }}" class="btn btn-outline-primary">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="fas fa-search text-muted" style="font-size: 4rem;"></i>
+                </div>
+                <h4>No programmes found</h4>
+                <p class="text-muted mb-4">
+                    We couldn't find any programmes matching your current filters. 
+                    Try adjusting your search criteria or browse all programmes.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('programmes') }}" class="btn btn-primary">
+                        <i class="fas fa-list me-2"></i>View All Programmes
+                    </a>
+                    <a href="{{ url_for('journey_builder') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-route me-2"></i>Build Your Journey
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Call to Action -->
+{% if programmes %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Not Sure Which Programme is Right for You?</h3>
+                <p class="text-muted mb-4">
+                    Our interactive journey builder will help you discover the perfect programme 
+                    based on your role, industry, and career goals.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('journey_builder') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-route me-2"></i>Build Your Journey
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-phone me-2"></i>Speak to an Advisor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// View toggle functionality
+document.getElementById('list-view').addEventListener('change', function() {
+    if (this.checked) {
+        document.getElementById('programmes-grid').className = 'row g-3';
+        document.querySelectorAll('.programme-card').forEach(card => {
+            card.closest('.col-lg-6').className = 'col-12';
+        });
+    }
+});
+
+document.getElementById('grid-view').addEventListener('change', function() {
+    if (this.checked) {
+        document.getElementById('programmes-grid').className = 'row g-4';
+        document.querySelectorAll('.programme-card').forEach(card => {
+            card.closest('.col-12').className = 'col-lg-6 col-xl-4';
+        });
+    }
+});
+</script>
+{% endblock %}

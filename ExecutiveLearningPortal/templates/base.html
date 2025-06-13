@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}ESBE - UK Accredited Executive Education for MENA Leaders. Empowering sustainable economic growth through transformative leadership programmes.{% endblock %}">
+    <title>{% block title %}ESBE - Everest School of Business and Economics{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ESBE Logo" class="me-2" style="width:100px; height:auto;">
+
+{#                <i class="fas fa-mountain me-2"></i>#}
+{#                <div>#}
+{#                    <strong>ESBE</strong>#}
+{#                    <small class="d-block text-light opacity-75">UK Accredited</small>#}
+{#                </div>#}
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Programmes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('programmes') }}">All Programmes</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('programmes', category='senior_executive') }}">Senior Executive Education</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('programmes', category='micro_credentials') }}">Micro-Credentials</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('programmes', category='corporate') }}">Corporate Development</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('journey_builder') }}">Find Your Journey</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-dark btn-sm ms-2" href="{{ url_for('contact') }}">
+                            <i class="fas fa-phone me-1"></i> Enquire Now
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-5 pt-4">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- START: Insights Section (Self-contained with Tailwind via CDN) -->
+{#<section>#}
+{#  <!-- Tailwind CDN -->#}
+{#  <script src="https://cdn.tailwindcss.com"></script>#}
+{##}
+{#  <div class="bg-white py-16 px-4 sm:px-6 lg:px-16">#}
+{#    <div class="max-w-screen-xl mx-auto">#}
+{#      <!-- Section Header -->#}
+{#      <div class="mb-12 text-center">#}
+{#        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900">Insights That Drive Impact</h2>#}
+{#        <p class="mt-3 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">#}
+{#          Explore our thought leadership on sustainability, development, and innovation across industries.#}
+{#        </p>#}
+{#      </div>#}
+{##}
+{#      <!-- Responsive Grid -->#}
+{#      <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">#}
+{#        <!-- Blog Card 1 -->#}
+{#        <div class="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition">#}
+{#          <img src="../static/images/blog-1.jpg" alt="Sustainability for SMEs" class="w-full h-48 object-cover rounded-t-xl">#}
+{#          <div class="p-6">#}
+{#            <h3 class="text-lg font-semibold text-gray-900 mb-2">Sustainability for SMEs</h3>#}
+{#            <p class="text-gray-600 text-sm mb-4">#}
+{#              How small enterprises can lead the circular transformation through practical, scalable frameworks.#}
+{#            </p>#}
+{#            <a href="blog/sustainability-smes.html"#}
+{#              class="inline-block bg-blue-700 text-white text-sm px-4 py-2 rounded hover:bg-blue-800 transition">#}
+{#              Read More →#}
+{#            </a>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Blog Card 2 -->#}
+{#        <div class="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition">#}
+{#          <img src="../static/images/blog-2.jpg" alt="Green Finance Strategies" class="w-full h-48 object-cover rounded-t-xl">#}
+{#          <div class="p-6">#}
+{#            <h3 class="text-lg font-semibold text-gray-900 mb-2">Green Finance Strategies</h3>#}
+{#            <p class="text-gray-600 text-sm mb-4">#}
+{#              Enabling ESG compliance and attracting green investments in emerging markets.#}
+{#            </p>#}
+{#            <a href="blog/green-finance.html"#}
+{#              class="inline-block bg-blue-700 text-white text-sm px-4 py-2 rounded hover:bg-blue-800 transition">#}
+{#              Read More →#}
+{#            </a>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Blog Card 3 -->#}
+{#        <div class="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition">#}
+{#          <img src="../static/images/blog-3.jpg" alt="Women in Policy & Finance" class="w-full h-48 object-cover rounded-t-xl">#}
+{#          <div class="p-6">#}
+{#            <h3 class="text-lg font-semibold text-gray-900 mb-2">Women in Policy & Finance</h3>#}
+{#            <p class="text-gray-600 text-sm mb-4">#}
+{#              Promoting inclusive financial strategies to empower women in leadership and policy development.#}
+{#            </p>#}
+{#            <a href="blog/women-finance-policy.html"#}
+{#              class="inline-block bg-blue-700 text-white text-sm px-4 py-2 rounded hover:bg-blue-800 transition">#}
+{#              Read More →#}
+{#            </a>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <!-- View All Button -->#}
+{#      <div class="mt-14 text-center">#}
+{#        <a href="/blog"#}
+{#          class="inline-block bg-gray-900 text-white text-base px-6 py-3 rounded-md hover:bg-gray-800 transition">#}
+{#          View All Insights →#}
+{#        </a>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</section>#}
+{#<!-- END: Insights Section -->#}
+{##}
+
+
+<!-- the new section -->
+<section class="cta-wrapper">
+  <div class="cta-box journey">
+    <h2>Ready to Build Your Learning Journey?</h2>
+    <p>
+      Let us help you discover the perfect programme based on your role, industry,
+      and career goals. Our interactive journey builder will recommend the most
+      relevant certifications for your success.
+    </p>
+    <a href="/journey-builder" class="cta-button">🚀 Start Your Journey</a>
+  </div>
+
+  <div class="cta-box impact">
+    <h2>Transform ambition into impact.</h2>
+    <ul>
+      <li><a href="/programmes">View Programmes →</a></li>
+      <li><a href="/apply">Start Your Application →</a></li>
+      <li><a href="/contact">Get in Touch →</a></li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cta-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 3rem 1.5rem;
+    background: linear-gradient(135deg, #0088cc, #28a745);
+  }
+
+  .cta-box {
+    flex: 1 1 300px;
+    padding: 2rem;
+    border-radius: 10px;
+    color: #fff;
+  }
+
+  .journey {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .impact {
+    background-color: #EF9651;
+  }
+
+  .cta-box h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .cta-box p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: #ddd;
+  }
+
+  .impact ul {
+    list-style-type: disc;
+    padding-left: 1.2rem;
+  }
+
+  .impact ul li {
+    margin-bottom: 0.5rem;
+  }
+
+  .impact ul li a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .cta-wrapper {
+      flex-direction: column;
+    }
+
+    .cta-box h2 {
+      font-size: 1.5rem;
+    }
+
+    .cta-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <!-- Company Information -->
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-mountain me-2 text-primary fs-3"></i>
+                        <div>
+                            <h5 class="mb-0 text-white">ESBE</h5>
+                            <small class="text-muted">Everest School of Business and Economics</small>
+                        </div>
+                    </div>
+                    <p class="text-light mb-3">
+                        Empowering MENA Leaders to Engineer Sustainable Economic Growth in an Era of Uncertainty. 
+                        UK Accredited, regionally tailored, Impact-Driven.
+                    </p>
+                    
+                    <!-- Contact Info -->
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-envelope text-primary me-3"></i>
+                            <a href="mailto:info@esbe.edu" class="text-light text-decoration-none">info@esbe.edu</a>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-phone text-primary me-3"></i>
+                            <span class="text-light">+971 XX XXX XXXX</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                            <span class="text-light">MENA Region</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Media -->
+                    <div class="social-links">
+                        <h6 class="text-white mb-2">Follow Us</h6>
+                        <a href="#" class="text-light me-3" aria-label="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-light me-3" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-light me-3" aria-label="YouTube"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-light" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Learning Pathways -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="text-primary mb-3">Learning Pathways</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('programmes', category='senior_executive') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-crown me-2"></i>Senior Executive Education
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('programmes', category='micro_credentials') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-bolt me-2"></i>Micro-Credentials
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('programmes', category='corporate') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-building me-2"></i>Corporate Development
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('programmes') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-list me-2"></i>All Programmes
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Industry Focus -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="text-primary mb-3">Industry Focus</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('programmes', industry='financial') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-chart-line me-2"></i>Financial Services
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('programmes', industry='healthcare') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-heartbeat me-2"></i>Healthcare & Medical
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('programmes', industry='energy') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-leaf me-2"></i>Energy & Sustainability
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('programmes', industry='general') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-users me-2"></i>Cross-Sector Leadership
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="text-primary mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('journey_builder') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-route me-2"></i>Build Your Journey
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('about') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-info-circle me-2"></i>About ESBE
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('contact') }}" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-envelope me-2"></i>Contact Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-download me-2"></i>Download Brochure
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Resources & Support -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="text-primary mb-3">Resources</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-question-circle me-2"></i>FAQs
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-file-alt me-2"></i>Programme Brochures
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-award me-2"></i>Accreditation
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-user-tie me-2"></i>Faculty
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-light text-decoration-none hover-link">
+                                <i class="fas fa-shield-alt me-2"></i>Privacy Policy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Newsletter Signup -->
+            <div class="row mt-4">
+                <div class="col-lg-8">
+                    <div class="card bg-primary bg-opacity-10 border-primary">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h6 class="text-white mb-2">Stay Updated</h6>
+                                    <p class="text-light small mb-0">Get the latest insights on executive education and industry trends</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="d-flex mt-3 mt-md-0">
+                                        <input type="email" class="form-control me-2" placeholder="Enter your email" required>
+                                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-lg-end">
+                        <div class="mb-2">
+                            <span class="badge bg-success me-2 mb-2">
+                                <i class="fas fa-certificate me-1"></i>UK Accredited
+                            </span>
+                            <span class="badge bg-info mb-2">
+                                <i class="fas fa-globe-middle-east me-1"></i>MENA Focused
+                            </span>
+                        </div>
+                        <div>
+                            <span class="badge bg-warning text-dark me-2">
+                                <i class="fas fa-leaf me-1"></i>Sustainability-Driven
+                            </span>
+                            <span class="badge bg-secondary">
+                                <i class="fas fa-chart-line me-1"></i>Impact-Oriented
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4 border-light">
+            
+            <!-- Bottom Footer -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-light small">
+                        &copy; 2024 ESBE - Everest School of Business and Economics. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-end">
+                        <a href="#" class="text-light text-decoration-none small me-3">Terms of Service</a>
+                        <a href="#" class="text-light text-decoration-none small me-3">Privacy Policy</a>
+                        <a href="#" class="text-light text-decoration-none small">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

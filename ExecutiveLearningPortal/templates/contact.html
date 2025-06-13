@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - ESBE{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<section class="bg-primary text-white py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold mb-3">Get in Touch</h1>
+                <p class="lead mb-0">
+                    Ready to transform your leadership journey? Our programme advisors are here to help you 
+                    find the perfect ESBE certification for your career goals.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="d-flex justify-content-lg-end gap-3">
+                    <div class="text-center">
+                        <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                            <i class="fas fa-phone fa-lg"></i>
+                        </div>
+                        <div>
+                            <strong>Call Us</strong>
+                            <div class="small opacity-75">+971 XX XXX XXXX</div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+                            <i class="fas fa-envelope fa-lg"></i>
+                        </div>
+                        <div>
+                            <strong>Email Us</strong>
+                            <div class="small opacity-75">info@esbe.edu</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <h3 class="mb-4">Send us a message</h3>
+                        
+                        <form method="POST" action="{{ url_for('submit_enquiry') }}">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Full Name *</label>
+                                    <input type="text" name="name" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email Address *</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" name="phone" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Company/Organization</label>
+                                    <input type="text" name="company" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Current Role</label>
+                                    <select name="role" class="form-select">
+                                        <option value="">Select your role</option>
+                                        <option value="C-Suite Executive">C-Suite Executive</option>
+                                        <option value="Senior Manager/Director">Senior Manager/Director</option>
+                                        <option value="Mid-Level Manager">Mid-Level Manager</option>
+                                        <option value="Early Career Professional">Early Career Professional</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Programme of Interest</label>
+                                    <select name="programme_interest" class="form-select">
+                                        <option value="">Select programme type</option>
+                                        <option value="Senior Executive Education">Senior Executive Education</option>
+                                        <option value="Micro-Credentials">Micro-Credentials</option>
+                                        <option value="Corporate Development">Corporate Development</option>
+                                        <option value="Custom Solution">Custom Solution</option>
+                                        <option value="General Inquiry">General Inquiry</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Message</label>
+                                    <textarea name="message" class="form-control" rows="5" 
+                                              placeholder="Tell us about your goals, timeline, or any specific questions you have..."></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="consent" required>
+                                        <label class="form-check-label" for="consent">
+                                            I agree to receive communications from ESBE about programmes and events. *
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 100px;">
+                    <!-- Quick Actions -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5>Quick Actions</h5>
+                            <hr>
+                            <div class="d-grid gap-2">
+                                <a href="{{ url_for('journey_builder') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-route me-2"></i>Build Learning Journey
+                                </a>
+                                <a href="{{ url_for('programmes') }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-graduation-cap me-2"></i>Browse Programmes
+                                </a>
+                                <a href="#" class="btn btn-outline-info">
+                                    <i class="fas fa-download me-2"></i>Download Brochure
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5>Contact Information</h5>
+                            <hr>
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                                    <div>
+                                        <strong>Regional Office</strong>
+                                        <div class="text-muted small">MENA Region</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-phone text-primary me-3"></i>
+                                    <div>
+                                        <strong>Phone</strong>
+                                        <div class="text-muted small">+971 XX XXX XXXX</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-envelope text-primary me-3"></i>
+                                    <div>
+                                        <strong>Email</strong>
+                                        <div class="text-muted small">info@esbe.edu</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-clock text-primary me-3"></i>
+                                    <div>
+                                        <strong>Office Hours</strong>
+                                        <div class="text-muted small">Sun-Thu: 9AM-6PM GMT+4</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Why Choose ESBE -->
+                    <div class="card border-0 shadow-sm bg-light">
+                        <div class="card-body">
+                            <h6 class="text-primary">Why Choose ESBE?</h6>
+                            <ul class="list-unstyled small mb-0">
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    UK Accredited Programmes
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    MENA-Focused Content
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Expert Faculty & Practitioners
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Flexible Learning Options
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Professional Network Building
+                                </li>
+                                <li class="mb-0">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Immediate Impact on Career
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="text-center mb-5">Frequently Asked Questions</h2>
+                
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0 shadow-sm mb-3">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How are ESBE programmes different from other executive education options?
+                            </button>
+                        </h3>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                ESBE programmes are UK-accredited with regionally tailored content specifically designed for MENA challenges. 
+                                We combine international best practices with deep understanding of regional business environments, 
+                                sustainability pressures, and economic transformation needs.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border-0 shadow-sm mb-3">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                What delivery formats are available?
+                            </button>
+                        </h3>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                We offer flexible delivery options including online, in-person, and hybrid formats. 
+                                Senior Executive programmes can be delivered as intensive bootcamps or extended programmes. 
+                                Micro-credentials are primarily online for maximum flexibility.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border-0 shadow-sm mb-3">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How long does it take to complete a programme?
+                            </button>
+                        </h3>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Programme duration varies by type: Micro-credentials range from 5-8 weeks, 
+                                Senior Executive programmes typically take 3-6 months, and Corporate Development 
+                                programmes are customized based on organizational needs.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border-0 shadow-sm mb-3">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                Do you offer corporate training solutions?
+                            </button>
+                        </h3>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, we provide customized Corporate Development programmes tailored to your organization's 
+                                specific challenges and goals. These can include team-based learning, on-site delivery, 
+                                and implementation support for organizational transformation initiatives.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

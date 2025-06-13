@@ -1,0 +1,419 @@
+{% extends "base.html" %}
+
+{% block title %}ESBE - Empowering MENA Leaders for Sustainable Growth{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-primary text-white position-relative overflow-hidden">
+    <div class="container">
+        <div class="row align-items-center min-vh-100 py-5">
+            <div class="col-lg-6">
+                <div class="badge bg-success mb-auto">UK Accredited • MENA Focused</div>
+                <h1 class="display-4 fw-bold mb-auto">
+                    Empowering MENA Leaders to Engineer 
+                    <span class="text-warning">Sustainable Economic Growth</span>
+                </h1>
+                <p class="lead mb-4">
+                    At ESBE, we equip MENA's decision-makers with strategic foresight, technical expertise, 
+                    and adaptive leadership skills to transform sustainability challenges into economic opportunities.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('journey_builder') }}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-route me-2"></i>Build Your Learning Journey
+                    </a>
+                    <a href="{{ url_for('programmes') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-graduation-cap me-2"></i>Explore Programmes
+                    </a>
+                </div>
+                
+                <!-- Key Stats -->
+                <div class="row mt-5">
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-warning mb-0">50+</h3>
+                            <small>Expert Programmes</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-warning mb-0">3</h3>
+                            <small>Learning Pathways</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-warning mb-0">100%</h3>
+                            <small>UK Accredited</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <!-- Executive Education Visual -->
+                    <div class="hero-visual-container">
+                        <div class="executive-education-graphic">
+                            <!-- Main Visual Element -->
+                            <div class="education-center">
+                                <div class="graduation-cap-modern">
+                                    <svg width="120" height="120" viewBox="0 0 120 120" class="text-warning">
+                                        <defs>
+                                            <linearGradient id="capGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#ffc107;stop-opacity:1" />
+                                                <stop offset="100%" style="stop-color:#ffb300;stop-opacity:1" />
+                                            </linearGradient>
+                                        </defs>
+                                        <!-- Graduation Cap -->
+                                        <path d="M60 25 L95 35 L60 45 L25 35 Z" fill="url(#capGradient)" stroke="#fff" stroke-width="2"/>
+                                        <path d="M95 35 L95 55 L60 65 L25 55 L25 35" fill="none" stroke="url(#capGradient)" stroke-width="2"/>
+                                        <circle cx="98" cy="35" r="3" fill="#ffc107"/>
+                                        <path d="M98 38 L98 50" stroke="#ffc107" stroke-width="2"/>
+                                        <!-- Academic Excellence Symbols -->
+                                        <circle cx="45" cy="75" r="8" fill="rgba(255,255,255,0.2)" stroke="#fff" stroke-width="1"/>
+                                        <text x="45" y="79" text-anchor="middle" fill="#fff" font-size="8" font-weight="bold">UK</text>
+                                        <circle cx="75" cy="75" r="8" fill="rgba(255,255,255,0.2)" stroke="#fff" stroke-width="1"/>
+                                        <path d="M71 75 L74 78 L79 71" stroke="#fff" stroke-width="2" fill="none"/>
+                                    </svg>
+                                </div>
+                                <div class="executive-elements">
+                                    <!-- Leadership Icons -->
+                                    <div class="leadership-icon leadership-1">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div class="leadership-icon leadership-2">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="leadership-icon leadership-3">
+                                        <i class="fas fa-globe-middle-east"></i>
+                                    </div>
+                                    <div class="leadership-icon leadership-4">
+                                        <i class="fas fa-award"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Connecting Lines -->
+                            <div class="connection-lines">
+                                <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 1;">
+                                    <defs>
+                                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:rgba(255,255,255,0.3);stop-opacity:1" />
+                                            <stop offset="50%" style="stop-color:rgba(255,193,7,0.6);stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:rgba(255,255,255,0.3);stop-opacity:1" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M150 100 Q200 50 250 100" stroke="url(#lineGradient)" stroke-width="2" fill="none" opacity="0.6"/>
+                                    <path d="M100 150 Q150 100 200 150" stroke="url(#lineGradient)" stroke-width="2" fill="none" opacity="0.6"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Text Overlay -->
+                        <div class="hero-text-overlay text-center mt-4">
+                            <h4 class="text-white mb-3">Where Ambition Meets Transformation</h4>
+                            <p class="text-light opacity-75 mb-3">Lead change, shape economies, and leave a lasting legacy</p>
+                            <div class="hero-badges">
+                                <span class="badge bg-warning bg-opacity-90 text-dark me-2">Executive Excellence</span>
+                                <span class="badge bg-light bg-opacity-20 text-black">Global Recognition</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Background Pattern -->
+    <div class="position-absolute top-0 end-0 opacity-10">
+{#        <svg width="400" height="400" viewBox="0 0 400 400" fill="none">#}
+{#            <circle cx="200" cy="200" r="150" stroke="currentColor" stroke-width="2"/>#}
+{#            <circle cx="200" cy="200" r="100" stroke="currentColor" stroke-width="2"/>#}
+{#            <circle cx="200" cy="200" r="50" stroke="currentColor" stroke-width="2"/>#}
+{#        </svg>#}
+    </div>
+</section>
+
+<!-- Value Proposition -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-5 fw-bold mb-3">The MENA Challenge</h2>
+                <p class="lead text-muted">
+                    Our region stands at a transformative crossroads, where sustainability, innovation, 
+                    and economic resilience meet. The urgency is clear.
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-leaf text-success"></i>
+                        </div>
+                        <h5>Sustainability Pressures</h5>
+                        <p class="text-muted small">Transitioning to circular economies while meeting net-zero targets.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-shield-alt text-primary"></i>
+                        </div>
+                        <h5>Governance Complexities</h5>
+                        <p class="text-muted small">Aligning with evolving ESG regulations and anti-corruption frameworks.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-robot text-warning"></i>
+                        </div>
+                        <h5>Digital Disruption</h5>
+                        <p class="text-muted small">Leveraging AI, blockchain, and fintech while mitigating cybersecurity risks.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-tint text-info"></i>
+                        </div>
+                        <h5>Resource Scarcity</h5>
+                        <p class="text-muted small">Balancing growth with water, energy, and waste management challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Learning Pathways -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-5 fw-bold mb-3">Three Learning Pathways. One Shared Mission.</h2>
+                <p class="lead text-muted">Programmes Designed for MENA's Sustainable Edge</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Senior Executive Education -->
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-lg">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <i class="fas fa-crown display-4 mb-3"></i>
+                        <h4>UK Senior Executive Education</h4>
+                        <p class="mb-0 opacity-75">Lead Transformation at Scale</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted mb-4">
+                            Elevating leadership excellence for MENA's sustainable transformation. 
+                            For C-suite executives, decision makers, and policymakers.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Transformation Leadership</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Sustainability Transition</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Healthcare Excellence</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Financial Risk Management</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-transparent p-4">
+                        <a href="{{ url_for('programmes', category='senior_executive') }}" class="btn btn-primary w-100">
+                            Explore Executive Programmes
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Micro-Credentials -->
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-lg">
+                    <div class="card-header bg-success text-white text-center py-4">
+                        <i class="fas fa-bolt display-4 mb-3"></i>
+                        <h4>UK Micro-Credentials</h4>
+                        <p class="mb-0 opacity-75">Skill Up, Stand Out</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted mb-4">
+                            Accelerate your learning with agile, bite-sized credentials for 
+                            early-career and mid-career professionals.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Agile timelines (weeks, not years)</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Adaptive formats (online/remote/live)</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>MENA-focused applications</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Future-proof skills</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-transparent p-4">
+                        <a href="{{ url_for('programmes', category='micro_credentials') }}" class="btn btn-success w-100">
+                            Browse Micro-Credentials
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Corporate Development -->
+            <div class="col-lg-4">
+                <div class="card h-100 border-0 shadow-lg">
+                    <div class="card-header bg-warning text-dark text-center py-4">
+                        <i class="fas fa-building display-4 mb-3"></i>
+                        <h4>Corporate Development</h4>
+                        <p class="mb-0 opacity-75">Build Your Edge</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted mb-4">
+                            Tailored solutions for organizational transformation. 
+                            Custom programmes designed for teams and organizations.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Customized curriculum</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Team-based learning</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Organizational transformation</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Implementation support</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-transparent p-4">
+                        <a href="{{ url_for('contact') }}" class="btn btn-warning w-100">
+                            Discuss Custom Solutions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Journey Builder CTA -->
+<section class="py-5 bg-gradient" style="background: linear-gradient(135deg, #0d6efd 0%, #198754 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 text-white">
+                <h2 class="display-6 fw-bold mb-3">Ready to Build Your Learning Journey?</h2>
+                <p class="lead mb-0">
+                    Let us help you discover the perfect programme based on your role, industry, and career goals. 
+                    Our interactive journey builder will recommend the most relevant certifications for your success.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('journey_builder') }}" class="btn btn-light btn-lg">
+                    <i class="fas fa-route me-2"></i>Start Your Journey
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CEO Message -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center mb-4 mb-md-0">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px;">
+                                    <i class="fas fa-user-tie text-primary" style="font-size: 2rem;"></i>
+                                </div>
+                                <h6 class="mb-0">Dr. Nada Elshazly</h6>
+                                <small class="text-muted">CEO, ESBE</small>
+                            </div>
+                            <div class="col-md-9">
+                                <blockquote class="blockquote">
+                                    <p class="mb-4">
+                                        "The World is Looking to MENA. Are We Future-Ready? Our region stands at a transformative crossroads, 
+                                        where sustainability, innovation, and economic resilience meet. At ESBE, we don't just ask these questions—we equip you to answer them."
+                                    </p>
+                                    <footer class="blockquote-footer mb-0">
+                                        Your partner in shaping a sustainable, inclusive, and resilient future
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Key Features -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-6 fw-bold mb-3">Why Choose ESBE?</h2>
+                <p class="lead text-muted">UK Executive Education Programmes, designed by MENA experts, for MENA challenges.</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center">
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-certificate text-primary fa-2x"></i>
+                    </div>
+                    <h5>UK Accredited</h5>
+                    <p class="text-muted">All programmes are UK-certified with international recognition and credibility.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center">
+                    <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-globe-middle-east text-success fa-2x"></i>
+                    </div>
+                    <h5>MENA Focused</h5>
+                    <p class="text-muted">Regionally tailored content addressing specific challenges and opportunities in MENA.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center">
+                    <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-chart-line text-warning fa-2x"></i>
+                    </div>
+                    <h5>Impact Driven</h5>
+                    <p class="text-muted">Focus on practical application and measurable impact on your organization and career.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center">
+                    <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-users text-info fa-2x"></i>
+                    </div>
+                    <h5>Expert Faculty</h5>
+                    <p class="text-muted">Learn from leading practitioners and academics with deep regional expertise.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center">
+                    <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-clock text-danger fa-2x"></i>
+                    </div>
+                    <h5>Flexible Delivery</h5>
+                    <p class="text-muted">Online, in-person, and hybrid options designed for busy executives.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center">
+                    <div class="bg-dark bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-handshake text-dark fa-2x"></i>
+                    </div>
+                    <h5>Network Building</h5>
+                    <p class="text-muted">Connect with like-minded leaders and decision-makers across the region.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

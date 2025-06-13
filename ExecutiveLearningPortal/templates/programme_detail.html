@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% block title %}{{ programme.title }} - ESBE{% endblock %}
+
+{% block meta_description %}{{ programme.short_description }} - UK Accredited Executive Education Programme at ESBE.{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav class="bg-light py-3 mt-5" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('programmes') }}">Programmes</a></li>
+            <li class="breadcrumb-item active">{{ programme.title }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Programme Header -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="badge-group mb-3">
+                    {% if programme.category == 'senior_executive' %}
+                        <span class="badge bg-light text-primary">Senior Executive Education</span>
+                    {% elif programme.category == 'micro_credentials' %}
+                        <span class="badge bg-success">Micro-Credential</span>
+                        {% if programme.get('duration') %}
+                            <span class="badge bg-info">{{ programme.duration }}</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Corporate Development</span>
+                    {% endif %}
+                    
+                    {% if programme.industry == 'financial' %}
+                        <span class="badge bg-light text-primary">Financial Services</span>
+                    {% elif programme.industry == 'healthcare' %}
+                        <span class="badge bg-light text-danger">Healthcare & Medical</span>
+                    {% elif programme.industry == 'energy' %}
+                        <span class="badge bg-light text-success">Energy & Sustainability</span>
+                    {% else %}
+                        <span class="badge bg-light text-secondary">Cross-Sector Leadership</span>
+                    {% endif %}
+                </div>
+                
+                <h1 class="display-6 fw-bold mb-3">{{ programme.title }}</h1>
+                <p class="lead mb-4">{{ programme.short_description }}</p>
+                
+                <!-- Key Info -->
+                <div class="row g-3">
+                    {% if programme.delivery %}
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-desktop me-2"></i>
+                                <span>{{ programme.delivery }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if programme.get('duration') %}
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-clock me-2"></i>
+                                <span>{{ programme.duration }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="card bg-white text-dark">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary">Ready to Enroll?</h5>
+                        <p class="card-text small mb-3">Join the next cohort and transform your leadership impact.</p>
+                        <a href="{{ url_for('contact') }}?programme={{ programme.title }}" class="btn btn-primary btn-lg w-100 mb-2">
+                            <i class="fas fa-envelope me-2"></i>Enquire Now
+                        </a>
+                        <a href="#" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-download me-2"></i>Download Brochure
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Programme Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Overview -->
+                <div class="mb-5">
+                    <h2 class="h3 mb-4">Programme Overview</h2>
+                    <p class="lead">{{ programme.overview }}</p>
+                </div>
+                
+                <!-- Target Audience -->
+                {% if programme.target_audience %}
+                <div class="mb-5">
+                    <h2 class="h3 mb-4">Who This Programme Is For</h2>
+                    <div class="bg-light p-4 rounded">
+                        <p class="mb-0">{{ programme.target_audience }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Programme Focus -->
+                {% if programme.focus %}
+                <div class="mb-5">
+                    <h2 class="h3 mb-4">Programme Focus</h2>
+                    <p>{{ programme.focus }}</p>
+                </div>
+                {% endif %}
+                
+                <!-- Modules -->
+                {% if programme.modules %}
+                <div class="mb-5">
+                    <h2 class="h3 mb-4">Curriculum Modules</h2>
+                    <div class="row g-3">
+                        {% for module in programme.modules %}
+                            <div class="col-md-6">
+                                <div class="card border-0 bg-light h-100">
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                            <span class="fw-bold">{{ loop.index }}</span>
+                                        </div>
+                                        <h6 class="mb-0">{{ module }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Learning Outcomes -->
+                <div class="mb-5">
+                    <h2 class="h3 mb-4">What You'll Achieve</h2>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="d-flex">
+                                <i class="fas fa-certificate text-primary me-3 mt-1"></i>
+                                <div>
+                                    <h6>UK Accredited Certification</h6>
+                                    <p class="text-muted small mb-0">Internationally recognized qualification with professional credibility.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex">
+                                <i class="fas fa-brain text-success me-3 mt-1"></i>
+                                <div>
+                                    <h6>Strategic Expertise</h6>
+                                    <p class="text-muted small mb-0">Advanced knowledge and practical skills for immediate application.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex">
+                                <i class="fas fa-network-wired text-warning me-3 mt-1"></i>
+                                <div>
+                                    <h6>Professional Network</h6>
+                                    <p class="text-muted small mb-0">Connect with like-minded leaders across the MENA region.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex">
+                                <i class="fas fa-chart-line text-info me-3 mt-1"></i>
+                                <div>
+                                    <h6>Career Advancement</h6>
+                                    <p class="text-muted small mb-0">Enhanced leadership capabilities for sustainable impact.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 100px;">
+                    <!-- Quick Info -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Programme Information</h5>
+                            <hr>
+                            
+                            {% if programme.delivery %}
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Delivery:</span>
+                                <strong>{{ programme.delivery.replace('Flexible options: ', '') }}</strong>
+                            </div>
+                            {% endif %}
+                            
+                            {% if programme.get('duration') %}
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Duration:</span>
+                                <strong>{{ programme.duration }}</strong>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Accreditation:</span>
+                                <strong>UK Certified</strong>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Language:</span>
+                                <strong>English</strong>
+                            </div>
+                            
+                            {% if programme.modules %}
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Modules:</span>
+                                <strong>{{ programme.modules|length }}</strong>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Card -->
+                    <div class="card border-0 shadow-sm bg-primary text-white">
+                        <div class="card-body text-center">
+                            <i class="fas fa-headset display-4 mb-3 opacity-75"></i>
+                            <h5>Need More Information?</h5>
+                            <p class="small opacity-75 mb-3">
+                                Speak with our programme advisors to learn more about this certification 
+                                and how it fits your career goals.
+                            </p>
+                            <a href="{{ url_for('contact') }}?programme={{ programme.title }}" class="btn btn-light">
+                                <i class="fas fa-phone me-2"></i>Contact an Advisor
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Programmes -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="h3 mb-4">You Might Also Like</h2>
+        <div class="row g-4">
+            <!-- This would be populated with related programmes in a real implementation -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="badge bg-primary mb-2">Related Programme</div>
+                        <h6 class="card-title">Explore Similar Programmes</h6>
+                        <p class="card-text small text-muted">
+                            Discover other programmes in the same category or industry focus.
+                        </p>
+                        <a href="{{ url_for('programmes', category=programme.category) }}" class="btn btn-outline-primary btn-sm">
+                            Browse {{ programme.category|replace('_', ' ')|title }} Programmes
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="badge bg-success mb-2">Industry Focus</div>
+                        <h6 class="card-title">{{ programme.industry|title }} Programmes</h6>
+                        <p class="card-text small text-muted">
+                            Explore other programmes designed for your industry sector.
+                        </p>
+                        <a href="{{ url_for('programmes', industry=programme.industry) }}" class="btn btn-outline-success btn-sm">
+                            View Industry Programmes
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="badge bg-warning text-dark mb-2">Personalized</div>
+                        <h6 class="card-title">Build Your Journey</h6>
+                        <p class="card-text small text-muted">
+                            Get personalized programme recommendations based on your goals.
+                        </p>
+                        <a href="{{ url_for('journey_builder') }}" class="btn btn-outline-warning btn-sm">
+                            Start Journey Builder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

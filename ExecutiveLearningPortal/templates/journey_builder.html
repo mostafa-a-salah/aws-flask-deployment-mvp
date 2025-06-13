@@ -1,0 +1,514 @@
+{% extends "base.html" %}
+
+{% block title %}Build Your Learning Journey - ESBE{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<section class="bg-gradient py-5 mt-5" style="background: linear-gradient(135deg, #0d6efd 0%, #198754 100%);">
+    <div class="container">
+        <div class="row justify-content-center text-center text-white">
+            <div class="col-lg-8">
+                <i class="fas fa-route display-4 mb-3 opacity-75"></i>
+                <h1 class="display-5 fw-bold mb-3">Build Your Personalized Learning Journey</h1>
+                <p class="lead mb-0">
+                    Answer a few questions about your role, industry, and goals, and we'll recommend 
+                    the perfect ESBE programmes to accelerate your leadership impact.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Journey Builder Form -->
+<section class="py-5">
+    <div class="container">
+        {% if not recommended_programmes %}
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <form method="POST" action="{{ url_for('recommend_programmes') }}" id="journey-form">
+                            <!-- Step 1: Role & Experience -->
+                            <div class="form-step active" id="step-1">
+                                <div class="text-center mb-4">
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar" style="width: 25%"></div>
+                                    </div>
+                                    <h3>Tell us about your current role</h3>
+                                    <p class="text-muted">This helps us understand your leadership level and responsibilities.</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">What best describes your current role?</label>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-card">
+                                                <input class="form-check-input" type="radio" name="role" value="c-suite executive" id="role1">
+                                                <label class="form-check-label card-check-label" for="role1">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-crown text-primary mb-2"></i>
+                                                            <h6>C-Suite Executive</h6>
+                                                            <small class="text-muted">CEO, COO, CFO, CTO</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-card">
+                                                <input class="form-check-input" type="radio" name="role" value="senior manager" id="role2">
+                                                <label class="form-check-label card-check-label" for="role2">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-users text-success mb-2"></i>
+                                                            <h6>Senior Manager/Director</h6>
+                                                            <small class="text-muted">Department heads, VPs</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-card">
+                                                <input class="form-check-input" type="radio" name="role" value="mid-level manager" id="role3">
+                                                <label class="form-check-label card-check-label" for="role3">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-user-tie text-warning mb-2"></i>
+                                                            <h6>Mid-Level Manager</h6>
+                                                            <small class="text-muted">Team leads, supervisors</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-card">
+                                                <input class="form-check-input" type="radio" name="role" value="early career professional" id="role4">
+                                                <label class="form-check-label card-check-label" for="role4">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-user text-info mb-2"></i>
+                                                            <h6>Early Career Professional</h6>
+                                                            <small class="text-muted">Analyst, specialist, coordinator</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary btn-lg" onclick="nextStep()">
+                                        Continue <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2: Industry -->
+                            <div class="form-step" id="step-2">
+                                <div class="text-center mb-4">
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <h3>Which industry do you work in?</h3>
+                                    <p class="text-muted">We'll tailor our recommendations to your sector's specific challenges.</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-card">
+                                                <input class="form-check-input" type="radio" name="industry" value="financial" id="industry1">
+                                                <label class="form-check-label card-check-label" for="industry1">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-chart-line text-primary mb-2"></i>
+                                                            <h6>Financial Services</h6>
+                                                            <small class="text-muted">Banking, investment, fintech</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-card">
+                                                <input class="form-check-input" type="radio" name="industry" value="healthcare" id="industry2">
+                                                <label class="form-check-label card-check-label" for="industry2">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-heartbeat text-danger mb-2"></i>
+                                                            <h6>Healthcare & Medical</h6>
+                                                            <small class="text-muted">Hospitals, pharma, medical devices</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-card">
+                                                <input class="form-check-input" type="radio" name="industry" value="energy" id="industry3">
+                                                <label class="form-check-label card-check-label" for="industry3">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-leaf text-success mb-2"></i>
+                                                            <h6>Energy & Sustainability</h6>
+                                                            <small class="text-muted">Oil & gas, renewables, utilities</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-card">
+                                                <input class="form-check-input" type="radio" name="industry" value="general" id="industry4">
+                                                <label class="form-check-label card-check-label" for="industry4">
+                                                    <div class="card">
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-building text-secondary mb-2"></i>
+                                                            <h6>Other/Cross-Sector</h6>
+                                                            <small class="text-muted">Government, consulting, other</small>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-outline-secondary me-2" onclick="prevStep()">
+                                        <i class="fas fa-arrow-left me-2"></i>Back
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-lg" onclick="nextStep()">
+                                        Continue <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3: Experience Level -->
+                            <div class="form-step" id="step-3">
+                                <div class="text-center mb-4">
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar" style="width: 75%"></div>
+                                    </div>
+                                    <h3>What's your experience level?</h3>
+                                    <p class="text-muted">This helps us recommend the right level of programme complexity.</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <select name="experience" class="form-select form-select-lg" required>
+                                        <option value="">Select your experience level</option>
+                                        <option value="entry">0-2 years (Entry Level)</option>
+                                        <option value="intermediate">3-7 years (Intermediate)</option>
+                                        <option value="experienced">8-15 years (Experienced)</option>
+                                        <option value="senior">15+ years (Senior Leader)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-outline-secondary me-2" onclick="prevStep()">
+                                        <i class="fas fa-arrow-left me-2"></i>Back
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-lg" onclick="nextStep()">
+                                        Continue <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 4: Goals -->
+                            <div class="form-step" id="step-4">
+                                <div class="text-center mb-4">
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar" style="width: 100%"></div>
+                                    </div>
+                                    <h3>What are your learning goals?</h3>
+                                    <p class="text-muted">Select all that apply to get the most relevant recommendations.</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="goals" value="leadership" id="goal1">
+                                                <label class="form-check-label" for="goal1">
+                                                    <strong>Enhance Leadership Skills</strong><br>
+                                                    <small class="text-muted">Develop strategic thinking and team management</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="goals" value="sustainability" id="goal2">
+                                                <label class="form-check-label" for="goal2">
+                                                    <strong>Master Sustainability & ESG</strong><br>
+                                                    <small class="text-muted">Lead sustainable transformation initiatives</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="goals" value="digital" id="goal3">
+                                                <label class="form-check-label" for="goal3">
+                                                    <strong>Digital Transformation</strong><br>
+                                                    <small class="text-muted">Navigate AI, fintech, and digital innovation</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="goals" value="risk" id="goal4">
+                                                <label class="form-check-label" for="goal4">
+                                                    <strong>Risk Management</strong><br>
+                                                    <small class="text-muted">Master financial and operational risk strategies</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="goals" value="finance" id="goal5">
+                                                <label class="form-check-label" for="goal5">
+                                                    <strong>Financial Expertise</strong><br>
+                                                    <small class="text-muted">Advanced financial analysis and strategy</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="goals" value="innovation" id="goal6">
+                                                <label class="form-check-label" for="goal6">
+                                                    <strong>Drive Innovation</strong><br>
+                                                    <small class="text-muted">Foster organizational change and innovation</small>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-outline-secondary me-2" onclick="prevStep()">
+                                        <i class="fas fa-arrow-left me-2"></i>Back
+                                    </button>
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="fas fa-magic me-2"></i>Get My Recommendations
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Recommendations Results -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="mb-4">
+                    <h2>Your Personalized Learning Journey</h2>
+                    <p class="text-muted">
+                        Based on your selections, here are the programmes we recommend for your professional development:
+                    </p>
+                    
+                    <!-- User Summary -->
+                    <div class="card bg-light border-0 mb-4">
+                        <div class="card-body">
+                            <h6>Your Profile:</h6>
+                            <div class="row g-2">
+                                <div class="col-auto">
+                                    <span class="badge bg-primary">{{ user_selections.role|title }}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="badge bg-success">{{ user_selections.industry|title }}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="badge bg-info">{{ user_selections.experience|title }}</span>
+                                </div>
+                                {% for goal in user_selections.goals %}
+                                    <div class="col-auto">
+                                        <span class="badge bg-secondary">{{ goal|title }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommended Programmes -->
+                {% if recommended_programmes %}
+                    <div class="row g-4">
+                        {% for programme in recommended_programmes %}
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-transparent border-0">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div class="badge-group">
+                                                {% if programme.category == 'senior_executive' %}
+                                                    <span class="badge bg-primary">Senior Executive</span>
+                                                {% elif programme.category == 'micro_credentials' %}
+                                                    <span class="badge bg-success">Micro-Credential</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="text-warning">
+                                                <i class="fas fa-star"></i>
+                                                <small>Recommended</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ programme.title }}</h5>
+                                        <p class="card-text text-muted small">{{ programme.short_description }}</p>
+                                        
+                                        {% if programme.delivery %}
+                                            <div class="mb-2">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-desktop me-1"></i>{{ programme.delivery }}
+                                                </small>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-footer bg-transparent border-0">
+                                        <div class="d-flex gap-2">
+                                            <a href="{{ url_for('programme_detail', programme_id=programme.id) }}" class="btn btn-primary flex-fill">
+                                                View Details
+                                            </a>
+                                            <a href="{{ url_for('contact') }}?programme={{ programme.title }}" class="btn btn-outline-primary">
+                                                <i class="fas fa-envelope"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-search text-muted mb-3" style="font-size: 3rem;"></i>
+                        <h4>No specific matches found</h4>
+                        <p class="text-muted mb-4">
+                            We couldn't find programmes that exactly match your criteria, 
+                            but we have many excellent options to explore.
+                        </p>
+                        <a href="{{ url_for('programmes') }}" class="btn btn-primary">
+                            Browse All Programmes
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 100px;">
+                    <!-- Start Over -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body text-center">
+                            <h6>Want to refine your search?</h6>
+                            <p class="text-muted small mb-3">
+                                Change your criteria to get different recommendations.
+                            </p>
+                            <a href="{{ url_for('journey_builder') }}" class="btn btn-outline-primary">
+                                <i class="fas fa-redo me-2"></i>Start Over
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Next Steps -->
+                    <div class="card border-0 shadow-sm bg-success text-white">
+                        <div class="card-body">
+                            <h6><i class="fas fa-rocket me-2"></i>Ready to Get Started?</h6>
+                            <p class="small opacity-75 mb-3">
+                                Speak with our programme advisors to discuss your goals 
+                                and finalize your learning journey.
+                            </p>
+                            <a href="{{ url_for('contact') }}" class="btn btn-light">
+                                <i class="fas fa-phone me-2"></i>Contact an Advisor
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentStep = 1;
+const totalSteps = 4;
+
+function nextStep() {
+    // Validate current step
+    const currentStepEl = document.getElementById(`step-${currentStep}`);
+    const requiredInputs = currentStepEl.querySelectorAll('input[required], select[required]');
+    let isValid = true;
+    
+    // Check radio buttons and selects
+    const radioGroups = {};
+    currentStepEl.querySelectorAll('input[type="radio"]').forEach(radio => {
+        if (!radioGroups[radio.name]) radioGroups[radio.name] = false;
+        if (radio.checked) radioGroups[radio.name] = true;
+    });
+    
+    for (const groupName in radioGroups) {
+        if (!radioGroups[groupName]) {
+            isValid = false;
+            break;
+        }
+    }
+    
+    currentStepEl.querySelectorAll('select[required]').forEach(select => {
+        if (!select.value) isValid = false;
+    });
+    
+    if (!isValid) {
+        alert('Please complete all required fields before continuing.');
+        return;
+    }
+    
+    if (currentStep < totalSteps) {
+        document.getElementById(`step-${currentStep}`).classList.remove('active');
+        currentStep++;
+        document.getElementById(`step-${currentStep}`).classList.add('active');
+    }
+}
+
+function prevStep() {
+    if (currentStep > 1) {
+        document.getElementById(`step-${currentStep}`).classList.remove('active');
+        currentStep--;
+        document.getElementById(`step-${currentStep}`).classList.add('active');
+    }
+}
+
+// Add styles for form steps
+const style = document.createElement('style');
+style.textContent = `
+    .form-step {
+        display: none;
+    }
+    .form-step.active {
+        display: block;
+    }
+    .form-check-card .card {
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 2px solid transparent;
+    }
+    .form-check-card input:checked + label .card {
+        border-color: var(--bs-primary);
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+    .card-check-label {
+        cursor: pointer;
+        width: 100%;
+    }
+    .form-check-input {
+        display: none;
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}
