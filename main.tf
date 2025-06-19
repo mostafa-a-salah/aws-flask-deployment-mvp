@@ -1,5 +1,5 @@
 terraform {
-  required_providers {
+	  required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.0"
@@ -14,6 +14,7 @@ resource "aws_instance" "app_server" {
   ami           = "ami-020cba7c55df1f615" # Ubuntu 24.04 LTS in us-east-1
   instance_type = "t2.micro"             # Free Tier eligible
   vpc_security_group_ids = [aws_security_group.app_sg.id]
+  key_name = aws_key_pair.app_key.key_name
   tags = {
     Name = "MyWebAppServer-Terraform"
   }
@@ -42,4 +43,8 @@ resource "aws_security_group" "app_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+resource "aws_key_pair" "app_key" {
+  key_name   = "my-app-key"
+  public_key = file("~/.ssh/id_rsa.pub")
 }
