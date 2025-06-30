@@ -1,0 +1,194 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ 'Edit' if section else 'Add' }} Content Section - ESBE Admin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">
+                <i class="fas fa-edit me-2"></i>{{ 'Edit' if section else 'Add' }} Content Section
+            </h1>
+            <a href="{{ url_for('admin.content') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Content
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Page *</label>
+                            <select name="page" class="form-select" required>
+                                <option value="">Select Page</option>
+                                {% for page in pages %}
+                                    <option value="{{ page }}" {{ 'selected' if section and section.page == page else '' }}>
+                                        {{ page.replace('_', ' ').title() }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label">Section Name *</label>
+                            <input type="text" name="section_name" class="form-control" 
+                                   value="{{ section.section_name if section else '' }}" 
+                                   placeholder="e.g., hero, features, about" required>
+                            <div class="form-text">Used to identify this section in templates</div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" 
+                                   value="{{ section.title if section else '' }}" 
+                                   placeholder="Section title">
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label">Subtitle</label>
+                            <input type="text" name="subtitle" class="form-control" 
+                                   value="{{ section.subtitle if section else '' }}" 
+                                   placeholder="Section subtitle">
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label">Content</label>
+                            <textarea name="content" class="form-control content-editor" rows="8" 
+                                      placeholder="Section content (HTML allowed)">{{ section.content if section else '' }}</textarea>
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <label class="form-label">Image URL</label>
+                            <input type="url" name="image_url" class="form-control" 
+                                   value="{{ section.image_url if section else '' }}" 
+                                   placeholder="https://example.com/image.jpg">
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <label class="form-label">Order</label>
+                            <input type="number" name="order_index" class="form-control" 
+                                   value="{{ section.order_index if section else 0 }}" min="0">
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <label class="form-label">Status</label>
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" name="is_active" 
+                                       {{ 'checked' if not section or section.is_active else '' }}>
+                                <label class="form-check-label">Active</label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <hr>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>{{ 'Update' if section else 'Create' }} Section
+                                </button>
+                                <a href="{{ url_for('admin.content') }}" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="sticky-top" style="top: 100px;">
+            <!-- Media Library -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-images me-2"></i>Media Library
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-outline-primary w-100" onclick="openMediaLibrary()">
+                        <i class="fas fa-folder-open me-2"></i>Browse Images
+                    </button>
+                    <div class="mt-3">
+                        <a href="{{ url_for('admin.media') }}" class="btn btn-outline-secondary btn-sm w-100">
+                            <i class="fas fa-upload me-2"></i>Upload New Image
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Help -->
+            <div class="card shadow-sm bg-light">
+                <div class="card-body">
+                    <h6><i class="fas fa-question-circle me-2"></i>Help</h6>
+                    <ul class="small mb-0">
+                        <li><strong>Page:</strong> Which page this content appears on</li>
+                        <li><strong>Section Name:</strong> Unique identifier for this section</li>
+                        <li><strong>Order:</strong> Display order (lower numbers first)</li>
+                        <li><strong>HTML:</strong> You can use HTML tags in content</li>
+                        <li><strong>Images:</strong> Use the media library to get image URLs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function openMediaLibrary() {
+    fetch('/admin/api/media-list')
+        .then(response => response.json())
+        .then(data => {
+            showMediaLibraryModal(data);
+        });
+}
+
+function showMediaLibraryModal(mediaFiles) {
+    const modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.innerHTML = `
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        ${mediaFiles.map(file => `
+                            <div class="col-md-3">
+                                <div class="card media-item" onclick="selectImage('${file.url}', '${file.filename}')" style="cursor: pointer;">
+                                    <img src="${file.url}" class="card-img-top" alt="${file.filename}" style="height: 120px; object-fit: cover;">
+                                    <div class="card-body p-2">
+                                        <small class="text-muted">${file.filename}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${mediaFiles.length === 0 ? '<p class="text-center text-muted">No images found. <a href="/admin/media">Upload some images</a> first.</p>' : ''}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    const bsModal = new bootstrap.Modal(modal);
+    bsModal.show();
+    
+    modal.addEventListener('hidden.bs.modal', function() {
+        modal.remove();
+    });
+    
+    window.selectImage = function(url, filename) {
+        document.querySelector('input[name="image_url"]').value = url;
+        bsModal.hide();
+    };
+}
+</script>
+{% endblock %}

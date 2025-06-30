@@ -15,8 +15,6 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 # Database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///esbe.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder, 'uploads')
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Initialize database
 from admin.models import db
@@ -29,11 +27,9 @@ from admin.routes import admin_bp
 # Register admin blueprint
 app.register_blueprint(admin_bp)
 
-# Create database tables and upload directory
+# Create database tables
 with app.app_context():
     db.create_all()
-    # Create upload directory if it doesn't exist
-    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # Template filters
 @app.template_filter('nl2br')

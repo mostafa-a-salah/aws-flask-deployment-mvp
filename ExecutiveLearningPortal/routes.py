@@ -1,11 +1,16 @@
 from flask import render_template, request, redirect, url_for, flash, jsonify
-from app import app
+from main import app
 from data.programmes import get_all_programmes, get_programme_by_id, get_programmes_by_category, get_programmes_by_industry, LEARNING_PATHWAYS, INDUSTRIES
+from admin.models import db, ContactSubmission, ContentSection
 
 @app.route('/')
 def index():
     """Home page with clear messaging and journey builder CTA"""
-    return render_template('index.html')
+    # Get dynamic content sections for home page
+    hero_section = ContentSection.query.filter_by(page='home', section_name='hero', is_active=True).first()
+    features_sections = ContentSection.query.filter_by(page='home', section_name='features', is_active=True).order_by(ContentSection.order_index).all()
+    
+    return render_template('index.html', hero_section=hero_section, features_sections=features_sections)
 
 @app.route('/programmes')
 def programmes():
@@ -100,12 +105,16 @@ def recommend_programmes():
 @app.route('/about')
 def about():
     """About page with company information and values"""
-    return render_template('about.html')
+    # Get dynamic content sections for about page
+    about_sections = ContentSection.query.filter_by(page='about', is_active=True).order_by(ContentSection.order_index).all()
+    return render_template('about.html', about_sections=about_sections)
 
 @app.route('/contact')
 def contact():
     """Contact page for enquiries"""
-    return render_template('contact.html')
+    # Get dynamic content sections for contact page
+    contact_sections = ContentSection.query.filter_by(page='contact', is_active=True).order_by(ContentSection.order_index).all()
+    return render_template('contact.html', contact_sections=contact_sections)
 
 @app.route('/submit-enquiry', methods=['POST'])
 def submit_enquiry():
@@ -118,12 +127,28 @@ def submit_enquiry():
     programme_interest = request.form.get('programme_interest')
     message = request.form.get('message')
     
-    # In a real application, this would send an email or save to database
-    # For now, we'll just flash a success message
-    flash(f'Thank you {name}! Your enquiry has been submitted. We will contact you within 24 hours.', 'success')
-    
-    # Log the enquiry for debugging
-    app.logger.info(f'New enquiry from {name} ({email}) - Interest: {programme_interest}')
+    # Save to database
+    try:
+        submission = ContactSubmission(
+            name=name,
+            email=email,
+            phone=phone,
+            company=company,
+            role=role,
+            programme_interest=programme_interest,
+            message=message,
+            status='new'
+        )
+        db.session.add(submission)
+        db.session.commit()
+        
+        flash(f'Thank you {name}! Your enquiry has been submitted. We will contact you within 24 hours.', 'success')
+        app.logger.info(f'New enquiry from {name} ({email}) - Interest: {programme_interest}')
+        
+    except Exception as e:
+        db.session.rollback()
+        app.logger.error(f'Error saving enquiry: {str(e)}')
+        flash('There was an error submitting your enquiry. Please try again.', 'error')
     
     return redirect(url_for('contact'))
 

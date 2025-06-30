@@ -1,0 +1,121 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Submission Details - ESBE Admin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">
+                <i class="fas fa-envelope me-2"></i>Submission Details
+            </h1>
+            <a href="{{ url_for('admin.submissions') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Submissions
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="mb-0">Contact Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Name:</strong> {{ submission.name }}</p>
+                        <p><strong>Email:</strong> 
+                            <a href="mailto:{{ submission.email }}">{{ submission.email }}</a>
+                        </p>
+                        {% if submission.phone %}
+                        <p><strong>Phone:</strong> 
+                            <a href="tel:{{ submission.phone }}">{{ submission.phone }}</a>
+                        </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        {% if submission.company %}
+                        <p><strong>Company:</strong> {{ submission.company }}</p>
+                        {% endif %}
+                        {% if submission.role %}
+                        <p><strong>Role:</strong> {{ submission.role }}</p>
+                        {% endif %}
+                        {% if submission.programme_interest %}
+                        <p><strong>Programme Interest:</strong> {{ submission.programme_interest }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if submission.message %}
+                <div class="mt-3">
+                    <strong>Message:</strong>
+                    <div class="bg-light p-3 rounded mt-2">
+                        {{ submission.message|nl2br }}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="mt-3">
+                    <small class="text-muted">
+                        Submitted on {{ submission.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="mb-0">Update Status</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.update_submission', submission_id=submission.id) }}">
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-select">
+                            <option value="new" {{ 'selected' if submission.status == 'new' else '' }}>New</option>
+                            <option value="contacted" {{ 'selected' if submission.status == 'contacted' else '' }}>Contacted</option>
+                            <option value="closed" {{ 'selected' if submission.status == 'closed' else '' }}>Closed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Notes</label>
+                        <textarea name="notes" class="form-control" rows="4" placeholder="Add internal notes...">{{ submission.notes or '' }}</textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-save me-2"></i>Update
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card shadow mt-3">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="mailto:{{ submission.email }}?subject=Re: Your ESBE Inquiry" class="btn btn-success">
+                        <i class="fas fa-envelope me-2"></i>Send Email
+                    </a>
+                    {% if submission.phone %}
+                    <a href="tel:{{ submission.phone }}" class="btn btn-info">
+                        <i class="fas fa-phone me-2"></i>Call
+                    </a>
+                    {% endif %}
+                    {% if submission.programme_interest %}
+                    <a href="{{ url_for('programmes') }}?search={{ submission.programme_interest }}" target="_blank" class="btn btn-outline-primary">
+                        <i class="fas fa-graduation-cap me-2"></i>View Programme
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

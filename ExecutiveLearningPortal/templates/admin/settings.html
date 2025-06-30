@@ -1,0 +1,209 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Site Settings - ESBE Admin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="h3 mb-4">
+            <i class="fas fa-palette me-2"></i>Site Settings & Theme
+        </h1>
+    </div>
+</div>
+
+<form method="POST" action="{{ url_for('admin.update_settings') }}">
+    <div class="row">
+        <!-- Theme Colors -->
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-palette me-2"></i>Theme Colors
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Primary Color</label>
+                            <input type="color" name="setting_primary_color" class="form-control form-control-color" 
+                                   value="{{ settings_dict.get('primary_color').setting_value if settings_dict.get('primary_color') else default_settings.primary_color }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Secondary Color</label>
+                            <input type="color" name="setting_secondary_color" class="form-control form-control-color" 
+                                   value="{{ settings_dict.get('secondary_color').setting_value if settings_dict.get('secondary_color') else default_settings.secondary_color }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Accent Color</label>
+                            <input type="color" name="setting_accent_color" class="form-control form-control-color" 
+                                   value="{{ settings_dict.get('accent_color').setting_value if settings_dict.get('accent_color') else default_settings.accent_color }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Success Color</label>
+                            <input type="color" name="setting_success_color" class="form-control form-control-color" 
+                                   value="{{ settings_dict.get('success_color').setting_value if settings_dict.get('success_color') else default_settings.success_color }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Warning Color</label>
+                            <input type="color" name="setting_warning_color" class="form-control form-control-color" 
+                                   value="{{ settings_dict.get('warning_color').setting_value if settings_dict.get('warning_color') else default_settings.warning_color }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Danger Color</label>
+                            <input type="color" name="setting_danger_color" class="form-control form-control-color" 
+                                   value="{{ settings_dict.get('danger_color').setting_value if settings_dict.get('danger_color') else default_settings.danger_color }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Site Information -->
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Site Information
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Site Title</label>
+                        <input type="text" name="setting_site_title" class="form-control" 
+                               value="{{ settings_dict.get('site_title').setting_value if settings_dict.get('site_title') else default_settings.site_title }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Logo URL</label>
+                        <input type="text" name="setting_logo_url" class="form-control" 
+                               value="{{ settings_dict.get('logo_url').setting_value if settings_dict.get('logo_url') else default_settings.logo_url }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Contact Email</label>
+                        <input type="email" name="setting_contact_email" class="form-control" 
+                               value="{{ settings_dict.get('contact_email').setting_value if settings_dict.get('contact_email') else default_settings.contact_email }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Contact Phone</label>
+                        <input type="text" name="setting_contact_phone" class="form-control" 
+                               value="{{ settings_dict.get('contact_phone').setting_value if settings_dict.get('contact_phone') else default_settings.contact_phone }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Footer Text</label>
+                        <textarea name="setting_footer_text" class="form-control" rows="3">{{ settings_dict.get('footer_text').setting_value if settings_dict.get('footer_text') else default_settings.footer_text }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-font me-2"></i>Typography
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">Font Family</label>
+                            <select name="setting_font_family" class="form-select">
+                                <option value="Segoe UI, Tahoma, Geneva, Verdana, sans-serif" 
+                                        {{ 'selected' if (settings_dict.get('font_family').setting_value if settings_dict.get('font_family') else default_settings.font_family) == 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif' else '' }}>
+                                    Segoe UI (Default)
+                                </option>
+                                <option value="Arial, sans-serif"
+                                        {{ 'selected' if (settings_dict.get('font_family').setting_value if settings_dict.get('font_family') else default_settings.font_family) == 'Arial, sans-serif' else '' }}>
+                                    Arial
+                                </option>
+                                <option value="Helvetica, Arial, sans-serif"
+                                        {{ 'selected' if (settings_dict.get('font_family').setting_value if settings_dict.get('font_family') else default_settings.font_family) == 'Helvetica, Arial, sans-serif' else '' }}>
+                                    Helvetica
+                                </option>
+                                <option value="Georgia, serif"
+                                        {{ 'selected' if (settings_dict.get('font_family').setting_value if settings_dict.get('font_family') else default_settings.font_family) == 'Georgia, serif' else '' }}>
+                                    Georgia
+                                </option>
+                                <option value="Times New Roman, serif"
+                                        {{ 'selected' if (settings_dict.get('font_family').setting_value if settings_dict.get('font_family') else default_settings.font_family) == 'Times New Roman, serif' else '' }}>
+                                    Times New Roman
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Button -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-2"></i>Save Settings
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-lg ms-2" onclick="previewChanges()">
+                        <i class="fas fa-eye me-2"></i>Preview Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function previewChanges() {
+    // Get all color values
+    const colors = {
+        primary: document.querySelector('input[name="setting_primary_color"]').value,
+        secondary: document.querySelector('input[name="setting_secondary_color"]').value,
+        accent: document.querySelector('input[name="setting_accent_color"]').value,
+        success: document.querySelector('input[name="setting_success_color"]').value,
+        warning: document.querySelector('input[name="setting_warning_color"]').value,
+        danger: document.querySelector('input[name="setting_danger_color"]').value
+    };
+    
+    // Apply colors to current page for preview
+    document.documentElement.style.setProperty('--bs-primary', colors.primary);
+    document.documentElement.style.setProperty('--bs-secondary', colors.secondary);
+    document.documentElement.style.setProperty('--bs-success', colors.success);
+    document.documentElement.style.setProperty('--bs-warning', colors.warning);
+    document.documentElement.style.setProperty('--bs-danger', colors.danger);
+    
+    // Show preview notification
+    const alert = document.createElement('div');
+    alert.className = 'alert alert-info alert-dismissible fade show position-fixed';
+    alert.style.cssText = 'top: 80px; right: 20px; z-index: 9999; width: 300px;';
+    alert.innerHTML = `
+        <i class="fas fa-eye me-2"></i>Preview mode active
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(alert);
+    
+    // Auto-remove after 3 seconds
+    setTimeout(() => {
+        if (alert.parentNode) {
+            alert.remove();
+        }
+    }, 3000);
+}
+
+// Color picker change handlers for live preview
+document.querySelectorAll('input[type="color"]').forEach(input => {
+    input.addEventListener('change', function() {
+        const colorName = this.name.replace('setting_', '').replace('_color', '');
+        document.documentElement.style.setProperty(`--bs-${colorName}`, this.value);
+    });
+});
+</script>
+{% endblock %}

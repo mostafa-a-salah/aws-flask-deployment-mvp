@@ -1,0 +1,197 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard - ESBE Admin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="h3 mb-4">
+            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+        </h1>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Submissions
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.total_submissions }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            New Submissions
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.new_submissions }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-bell fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Active Programmes
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.total_programmes }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Published Posts
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.published_posts }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-blog fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Submissions -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Submissions</h6>
+                <a href="{{ url_for('admin.submissions') }}" class="btn btn-primary btn-sm">
+                    View All
+                </a>
+            </div>
+            <div class="card-body">
+                {% if recent_submissions %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Programme Interest</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for submission in recent_submissions %}
+                                <tr>
+                                    <td>{{ submission.name }}</td>
+                                    <td>{{ submission.email }}</td>
+                                    <td>{{ submission.programme_interest or 'N/A' }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ 'success' if submission.status == 'contacted' else 'secondary' if submission.status == 'closed' else 'primary' }}">
+                                            {{ submission.status.title() }}
+                                        </span>
+                                    </td>
+                                    <td>{{ submission.created_at.strftime('%Y-%m-%d') }}</td>
+                                    <td>
+                                        <a href="{{ url_for('admin.submission_detail', submission_id=submission.id) }}" class="btn btn-sm btn-outline-primary">
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No submissions yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Quick Actions</h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('admin.add_content') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add Content Section
+                    </a>
+                    <a href="{{ url_for('admin.add_programme') }}" class="btn btn-success">
+                        <i class="fas fa-graduation-cap me-2"></i>Add Programme
+                    </a>
+                    <a href="{{ url_for('admin.add_blog_post') }}" class="btn btn-info">
+                        <i class="fas fa-blog me-2"></i>Add Blog Post
+                    </a>
+                    <a href="{{ url_for('admin.media') }}" class="btn btn-warning">
+                        <i class="fas fa-upload me-2"></i>Upload Media
+                    </a>
+                    <a href="{{ url_for('admin.settings') }}" class="btn btn-secondary">
+                        <i class="fas fa-cog me-2"></i>Site Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">System Info</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>Total Media Files:</strong> {{ stats.total_media_files }}</p>
+                <p><strong>Total Blog Posts:</strong> {{ stats.total_blog_posts }}</p>
+                <p><strong>Last Login:</strong> {{ moment().format('YYYY-MM-DD HH:mm') }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block head %}
+<style>
+.border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+}
+.border-left-success {
+    border-left: 0.25rem solid #1cc88a !important;
+}
+.border-left-info {
+    border-left: 0.25rem solid #36b9cc !important;
+}
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+</style>
+{% endblock %}
